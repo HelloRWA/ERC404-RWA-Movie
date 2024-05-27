@@ -1,3 +1,14 @@
+# ERC404 RWA Movie
+
+This is the frontend code for the ERC404 RWA Movie project. It build on the  open source template [Nuxt Movie](https://github.com/nuxt/movies).
+
+
+## Below is the README from the open source template [Nuxt Movie](https://github.com/nuxt/movies)
+<hr />
+<br />
+<br />
+<br />
+
 <br><p align="center">
 <img height="100px" src="./public/movies.webp" />
 </p>
