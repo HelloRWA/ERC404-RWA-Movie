@@ -18,7 +18,8 @@ export default defineConfig({
     ['n-tab', 'text-base tracking-wide uppercase p3 border-b-2 border-transparent op20 transition'],
     ['n-tab-active', 'border-current op100'],
     ['border-base', 'border-gray-400/20'],
-    ['flex-bc', 'flex justify-between items-center']
+    ['flex-bc', 'flex justify-between items-center'],
+    ['flex-cc', 'flex justify-center items-center'],
   ],
   rules: [
     [/^view-transition-([\w-]+)$/, ([, name]) => ({ 'view-transition-name': name })],

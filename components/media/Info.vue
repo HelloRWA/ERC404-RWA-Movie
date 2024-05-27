@@ -19,9 +19,8 @@ const directors = computed(() => props.item.credits?.crew.filter((person) => per
 
 <template>
   <div p4 max-w-300 mx-auto>
-    <div flex flex-col items-stretch justify-stretch space-y-10 pb-10 px-5 md="flex-row space-x-10">
+    <div grid grid-cols-1 gap-0 space-y-5 md:(space-y-0 grid-cols-3 gap-6) py-10>
       <NuxtImg
-        height="600"
         format="webp"
         :src="`/tmdb${props.item.poster_path}`"
         :alt="props.item.title || props.item.name"
@@ -30,10 +29,9 @@ const directors = computed(() => props.item.credits?.crew.filter((person) => per
         transition
         duration-400
         object-cover
-        aspect="10/16"
         :style="{ 'view-transition-name': `item-${props.item.id}` }"
       />
-      <TokenStats />
+      <TokenStats col-span-2 />
     </div>
     <div lt-md:w="[calc(100vw-2rem)]" flex="~ col" md:p4 gap6>
       <div v-if="props.item.overview">

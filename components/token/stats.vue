@@ -1,18 +1,18 @@
 <script setup lang="ts">
 const stats = [
-  { id: 1, name: "Creators on the platform", value: "8,000+" },
-  { id: 2, name: "Flat platform fee", value: "3%" },
-  { id: 3, name: "Uptime guarantee", value: "99.9%" },
-  { id: 4, name: "Paid out to creators", value: "$70M" },
+  { id: 1, name: "TVL", value: "4.56M" },
+  { id: 2, name: "NFT Holders", value: "3.32k" },
+  { id: 3, name: "FT Holders", value: "2.56k" },
+  { id: 4, name: "SBT Sold", value: "1.23M" },
 ];
 
 const doLaunch = async () => {};
 </script>
 
 <template>
-  <div class="rounded-xl h-full bg-gray-900 py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:max-w-none">
+  <div class="rounded-xl h-full bg-gray-900 py-12 sm:py-16">
+    <div class="h-full mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="flex flex-col mx-auto max-w-2xl lg:max-w-none">
         <div class="text-center">
           <h2 class="font-bold text-white tracking-tight text-3xl sm:text-4xl">Token / NFT Stats</h2>
           <!-- <p class="mt-4 text-lg text-gray-300 leading-8">Lorem ipsum dolor sit amet consect adipisicing possimus.</p> -->
@@ -23,11 +23,14 @@ const doLaunch = async () => {};
             <dd class="order-first font-semibold text-white tracking-tight text-3xl">{{ stat.value }}</dd>
           </div>
         </dl>
-        <div pt-10>
-          <button flex="~ gap2" items-center p="x6 y3" bg="gray/15 hover:gray/20" transition :title="$t('Launch Token')" @click="doLaunch()">
-            <div i-heroicons-rocket-launch-16-solid />
-            {{ $t("Launch Token") }}
-          </button>
+        <div py-5 flex-cc>
+          <div pt-10 text-center flex flex-col items-center>
+            <h3 text-2xl mb-5>Token not issued yet.</h3>
+            <button flex="~ gap2" items-center p="x6 y3" bg="gray/15 hover:gray/20" transition :title="$t('Launch Token')" @click="doLaunch()">
+              <div i-heroicons-rocket-launch-16-solid />
+              {{ $t("Launch Token") }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
