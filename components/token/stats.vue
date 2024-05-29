@@ -6,7 +6,11 @@ const stats = [
   { id: 4, name: "SBT Sold", value: "1.23M" },
 ];
 
-const doLaunch = async () => {};
+let show = $ref(true);
+const doLaunch = async () => {
+  console.log(`====> show :`, show);
+  show = !show;
+};
 </script>
 
 <template>
@@ -34,5 +38,6 @@ const doLaunch = async () => {};
         </div>
       </div>
     </div>
+    <TokenLaunchModal :show="show" @close="show = false" />
   </div>
 </template>

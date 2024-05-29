@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/image',
     '@nuxtjs/i18n',
+    'nuxt-gtag',
+    '@vue-macros/nuxt',
+    'nuxt-lodash',
+    '@pinia/nuxt'
   ],
   experimental: {
     inlineSSRStyles: false,

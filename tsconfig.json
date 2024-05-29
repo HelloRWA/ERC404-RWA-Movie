@@ -5,5 +5,16 @@
   },
   "exclude": [
     "proxy/**"
-  ]
+  ],
+  "vueCompilerOptions": {
+    "plugins": [
+      "@vue-macros/volar/define-models",
+      "@vue-macros/volar/short-vmodel"
+    ],
+    "vueMacros": {
+      "shortVmodel": {
+        "prefix": "$"
+      },
+    }
+  }
 }
