@@ -6,11 +6,7 @@ const stats = [
   { id: 4, name: "SBT Sold", value: "1.23M" },
 ];
 
-let show = $ref(true);
-const doLaunch = async () => {
-  console.log(`====> show :`, show);
-  show = !show;
-};
+let { isShow } = $(tokenLaunchStore());
 </script>
 
 <template>
@@ -29,8 +25,8 @@ const doLaunch = async () => {
         </dl>
         <div py-5 flex-cc>
           <div pt-10 text-center flex flex-col items-center>
-            <h3 text-2xl mb-5>Token not issued yet.</h3>
-            <button flex="~ gap2" items-center p="x6 y3" bg="gray/15 hover:gray/20" transition :title="$t('Launch Token')" @click="doLaunch()">
+            <h3 text-2xl mb-5>Token is not launched yet.</h3>
+            <button flex="~ gap2" items-center p="x6 y3" bg="gray/15 hover:gray/20" transition :title="$t('Launch Token')" @click="isShow = true">
               <div i-heroicons-rocket-launch-16-solid />
               {{ $t("Launch Token") }}
             </button>
@@ -38,6 +34,6 @@ const doLaunch = async () => {
         </div>
       </div>
     </div>
-    <TokenLaunchModal :show="show" @close="show = false" />
+    <TokenLaunchModal />
   </div>
 </template>

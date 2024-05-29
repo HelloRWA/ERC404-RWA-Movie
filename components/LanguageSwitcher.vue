@@ -1,19 +1,19 @@
 <script setup>
-const { locale, locales, setLocale } = useI18n()
+const { locale, locales, setLocale } = useI18n();
 
 const availableLocales = computed(() => {
-  return (locales.value)
-})
+  return locales.value;
+});
 
 function updateLocale(event) {
-  setLocale(event.target.value)
-  window.location.reload()
+  setLocale(event.target.value);
+  window.location.reload();
 }
 
 onMounted(() => {
-  const langSwitcher = document.querySelector('#langSwitcher')
-  langSwitcher.value = locale.value
-})
+  const langSwitcher = document.querySelector("#langSwitcher");
+  langSwitcher.value = locale.value;
+});
 </script>
 
 <template>

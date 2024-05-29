@@ -1,18 +1,10 @@
 <script setup lang="ts">
-const show = defineProp("show");
-const onClose = defineEmit("close");
-
-const form = $ref({
-  name: "Godzilla",
-  sbtPrice: 10,
-  ftPrice: 10,
-  ftSwapAmount: 1000,
-});
+const { isShow, form, doSubmit, isLoading } = $(tokenLaunchStore());
 </script>
 
 <template>
-  <DialogModal :show="show" :title="$t('Launch Token')" @close="onClose">
-    <div space-y-5>
+  <DialogModal :show="isShow" :title="$t('Launch Token')" @close="isShow = false">
+    <Loading :is-loading="isLoading" space-y-5>
       <div>
         <label for="name" class="font-medium text-sm text-white leading-6 block">Token name</label>
         <div class="mt-2">
@@ -66,9 +58,7 @@ const form = $ref({
           />
         </div>
       </div>
-    </div>
-    <template #footer>
-      <button class="btn-primary">Submit</button>
-    </template>
+      <button class="btn-primary" @click="doSubmit">Submit</button>
+    </Loading>
   </DialogModal>
 </template>

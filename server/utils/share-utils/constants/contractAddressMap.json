@@ -1,0 +1,28 @@
+{
+  "hardhat": {
+    "BSTEntropy": "0x69f865dCd1A61A957FE9b78666adF4e8909a052B",
+    "BSTSwap": "0x731b98194AD3FcB815704d3883D96faB145C3Bd8"
+  },
+  "homestead": {
+    "USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+  },
+  "optimism": {
+    "USDC": "0x0b2c639c533813f4aa9d7837caf62653d097ff85"
+  },
+  "arbitrum": {
+    "USDC": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+  },
+  "bsc": {
+    "USDC": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+  },
+  "base": {
+    "USDC": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "avalanche-fuji": {
+    "BSTEntropy": "0xB9e94A2Cb0Ef78deBc25D76e8f62E1C024c15A17",
+    "BSTSwap": "0x2dd741434f7004e1eca629e8bdd906ddca888655"
+  },
+  "sepolia": {
+    "USDC": "0x76ca8e630415be9615396724f51ff1702b86ed63"
+  }
+}
