@@ -36,7 +36,7 @@ const onClose = defineEmit("close");
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="rounded-lg bg-gray-700 shadow-xl text-left transform px-4 pt-5 pb-4 transition-all relative overflow-hidden sm:max-w-sm sm:my-8 sm:w-full sm:p-6"
+              class="rounded-lg bg-gray-700 shadow-xl text-left w-full transform px-4 pt-5 pb-4 transition-all relative overflow-hidden sm:max-w-sm sm:my-8 sm:p-6"
             >
               <slot name="title">
                 <DialogTitle as="h3" class="font-semibold text-center text-base text-white leading-6">{{ title }}</DialogTitle>

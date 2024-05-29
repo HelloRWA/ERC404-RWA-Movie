@@ -7,26 +7,25 @@ import {
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss'
+} from "unocss";
 
 // @unocss-include
 
 export default defineConfig({
   shortcuts: [
-    ['n-link', 'op50 hover:(op100 text-primary) transition'],
-    ['n-link-text', 'n-link underline'],
-    ['n-tab', 'text-base tracking-wide uppercase p3 border-b-2 border-transparent op20 transition'],
-    ['n-tab-active', 'border-current op100'],
-    ['border-base', 'border-gray-400/20'],
-    ['flex-bc', 'flex justify-between items-center'],
-    ['flex-cc', 'flex justify-center items-center'],
+    ["n-link", "op50 hover:(op100 text-primary) transition"],
+    ["n-link-text", "n-link underline"],
+    ["n-tab", "text-base tracking-wide uppercase p3 border-b-2 border-transparent op20 transition"],
+    ["n-tab-active", "border-current op100"],
+    ["border-base", "border-gray-400/20"],
+    ["flex-bc", "flex justify-between items-center"],
+    ["flex-cc", "flex justify-center items-center"],
+    ["btn-primary", "bg-primary opacity-80 rounded-md font-semibold shadow-sm mt-5 text-sm text-white w-full py-2 px-3 hover:(opacity-100)"],
   ],
-  rules: [
-    [/^view-transition-([\w-]+)$/, ([, name]) => ({ 'view-transition-name': name })],
-  ],
+  rules: [[/^view-transition-([\w-]+)$/, ([, name]) => ({ "view-transition-name": name })]],
   theme: {
     colors: {
-      primary: '#40c1ad',
+      primary: "#40c1ad",
     },
   },
   presets: [
@@ -38,14 +37,11 @@ export default defineConfig({
     presetTypography(),
     presetWebFonts({
       fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Serif Display',
-        mono: 'DM Mono',
+        sans: "DM Sans",
+        serif: "DM Serif Display",
+        mono: "DM Mono",
       },
     }),
   ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
-})
+  transformers: [transformerDirectives(), transformerVariantGroup()],
+});
