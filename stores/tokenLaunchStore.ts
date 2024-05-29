@@ -1,18 +1,26 @@
 export const tokenLaunchStore = defineStore("tokenLaunchStore", () => {
-  const {writeContract, readContract} = $(evmWalletStore())
+  const { ensurePaymentBalanceAndAllowance, payment } = $(bstStore())
+  const { writeContract } = $(evmWalletStore())
+
+  let { paymentName } = $(bstStore())
+  paymentName = 'BSTEntropy'
+
   const isShow = $ref(true);
   const form = $ref({
     name: "Godzilla",
     sbtPrice: 10,
     ftPrice: 10,
     ftSwapAmount: 1000,
-    payment: '${BSTAddress}',
+    payment,
   });
 
   let isLoading = $ref(false)
   const doSubmit = async () => {
     if (isLoading) return
     isLoading = true
+
+    const payAmount = parseEther('100')
+    await ensurePaymentBalanceAndAllowance('ERC404_RWA', payAmount)
     const params = [form.name, parseEther(form.sbtPrice + ''), parseEther(form.ftPrice + ''), form.ftSwapAmount, form.payment]
     await writeContract('ERC404_RWA', 'launch', {}, ...params)
     isLoading = false

@@ -1,4 +1,3 @@
-import { camelCase } from 'lodash-es';
 import { hardhat, mantleTestnet, polygonAmoy, goerli, polygon, avalancheFuji, optimismGoerli, moonbaseAlpha, bscTestnet } from 'viem/chains'
 import _ from 'lodash'
 import { defineChain, http } from 'viem'

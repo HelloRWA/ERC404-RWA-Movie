@@ -1,10 +1,9 @@
 <script setup lang="ts">
-interface Props {
+const { isLoading, tb = false, text = "Loading..." } = $defineProps<{
   isLoading: boolean;
+  text?: string;
   tb?: boolean;
-  text?: String;
-}
-let { isLoading, tb = false, text = "Loading..." } = defineProps<Props>();
+}>();
 </script>
 
 <template>

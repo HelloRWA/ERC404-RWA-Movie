@@ -11,16 +11,14 @@ import {
   keccak256,
 } from "viem";
 
-import { hardhat, filecoinCalibration } from 'viem/chains'
-
-
-export const evmWalletStore = defineStore('evmWalletStore', () => {
-  let address = $(lsItemRef('evmAddress', ''))
-  let web3Client = $ref(null)
+export const evmWalletStore = defineStore("evmWalletStore", () => {
+  let address = $(lsItemRef("evmAddress", ""));
+  let web3Client = $ref(null);
+  const network = 'hardhat'
 
   const getBrowserWalletInstance = async (chain) => {
     const [account] = await window.ethereum.request({ method: "eth_requestAccounts" });
-     web3Client = createWalletClient({
+    web3Client = createWalletClient({
       account,
       chain,
       transport: custom(window.ethereum),
@@ -34,12 +32,11 @@ export const evmWalletStore = defineStore('evmWalletStore', () => {
         await web3Client.switchChain({ id: chain.id });
       }
     }
-    
-    address = web3Client.account.address
+
+    address = web3Client.account.address;
   };
 
-
-   const readContract = async (contractName, functionName, { walletClient = null }, ...args) => {
+  const readContract = async (contractName, functionName, { walletClient = null }, ...args) => {
     if (!walletClient) {
       walletClient = web3Client;
     }
@@ -62,14 +59,13 @@ export const evmWalletStore = defineStore('evmWalletStore', () => {
       address,
       abi,
       functionName,
-      account: unref(account),
       args,
     };
 
     return walletClient.readContract(params);
   };
 
-   const simulateContract = async ({ contractName, functionName, value = "", walletClient = null }, ...args) => {
+  const simulateContract = async ({ contractName, functionName, value = "", walletClient = null }, ...args) => {
     if (!walletClient) {
       walletClient = web3Client;
     }
@@ -84,12 +80,22 @@ export const evmWalletStore = defineStore('evmWalletStore', () => {
       args,
     };
     if (value) params.value = value;
-
-    return walletClient.simulateContract(params);
-   };
-  
-  const writeContract = async (contractName, functionName, { value = "", walletClient = null}, ...args) => {
+    let rz = null
     try {
+      rz = await walletClient.simulateContract(params);
+    } catch (err) {
+      console.log(`====> err :`, err)
+      return {error: err.toString()}
+    }
+    return rz
+  };
+
+  const writeContract = async (contractName, functionName, { value = "", walletClient = null }, ...args) => {
+    if (!walletClient) {
+      walletClient = web3Client;
+    }
+    try {
+      console.log(`====> args :`, args)
       const { request, result } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
       const hash = await walletClient.writeContract(request);
       const tx = await walletClient.waitForTransactionReceipt({
@@ -107,8 +113,7 @@ export const evmWalletStore = defineStore('evmWalletStore', () => {
     }
   };
 
-  return $$({ address, readContract, writeContract, getBrowserWalletInstance })
-})
+  return $$({ address, network, readContract, writeContract, getBrowserWalletInstance });
+});
 
-if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(evmWalletStore, import.meta.hot))
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(evmWalletStore, import.meta.hot));
