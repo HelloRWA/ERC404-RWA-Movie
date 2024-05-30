@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
-const { show, title } = $defineProps<{
+const { show, title, isTopImportant = false } = $defineProps<{
   show: boolean;
-  title: string;
+  title?: string;
+  isTopImportant?: boolean;
 }>();
 
 const onClose = defineEmit("close");
@@ -11,7 +12,7 @@ const onClose = defineEmit("close");
 
 <template>
   <TransitionRoot as="template" :show="show">
-    <Dialog class="z-10 relative" @close="onClose">
+    <Dialog class="relative" @close="onClose" :class="isTopImportant ? 'z-999' : 'z-10'">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -36,15 +37,13 @@ const onClose = defineEmit("close");
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="rounded-lg bg-gray-700 shadow-xl text-left w-full transform px-4 pt-5 pb-4 transition-all relative overflow-hidden sm:max-w-sm sm:my-8 sm:p-6"
+              class="rounded-lg space-y-4 bg-gray-700 shadow-xl text-left w-full transform px-4 pt-5 pb-4 transition-all relative overflow-hidden sm:max-w-sm sm:my-8 sm:p-6"
             >
               <slot name="title">
-                <DialogTitle as="h3" class="font-semibold text-center text-base text-white leading-6">{{ title }}</DialogTitle>
+                <DialogTitle v-if="title" as="h3" class="font-semibold text-center text-base text-white leading-6">{{ title }}</DialogTitle>
               </slot>
 
-              <div class="mt-4">
-                <slot></slot>
-              </div>
+              <slot></slot>
               <slot name="footer"> </slot>
               <!-- <div class="mt-5 sm:mt-6"></div> -->
             </DialogPanel>

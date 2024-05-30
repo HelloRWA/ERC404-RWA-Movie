@@ -3,7 +3,7 @@ const { isShow, form, doSubmit, isLoading } = $(tokenLaunchStore());
 </script>
 
 <template>
-  <DialogModal :show="isShow" :title="$t('Launch Token')" @close="isShow = false">
+  <BsDialog :show="isShow" :title="$t('Launch Token')" @close="isShow = false">
     <Loading :is-loading="isLoading" space-y-5>
       <div>
         <label for="name" class="font-medium text-sm text-white leading-6 block">Token name</label>
@@ -60,5 +60,5 @@ const { isShow, form, doSubmit, isLoading } = $(tokenLaunchStore());
       </div>
       <button class="btn-primary" @click="doSubmit">Submit</button>
     </Loading>
-  </DialogModal>
+  </BsDialog>
 </template>

@@ -1,3 +1,4 @@
+import { notificationStore } from "./notificationStore";
 import {
   createPublicClient,
   toHex,
@@ -10,19 +11,21 @@ import {
   publicActions,
   keccak256,
 } from "viem";
+import { hardhat, filecoinCalibration } from "viem/chains";
+
+const networkMap = {
+  hardhat,
+  filecoinCalibration,
+};
 
 export const evmWalletStore = defineStore("evmWalletStore", () => {
   let address = $(lsItemRef("evmAddress", ""));
   let web3Client = $ref(null);
-  const network = 'hardhat'
+  const network = "hardhat";
+  const { addError } = $(notificationStore());
 
-  const getBrowserWalletInstance = async (chain) => {
-    const [account] = await window.ethereum.request({ method: "eth_requestAccounts" });
-    web3Client = createWalletClient({
-      account,
-      chain,
-      transport: custom(window.ethereum),
-    }).extend(publicActions);
+  const ensureChain = async (network) => {
+    const chain = networkMap[network]
 
     try {
       await web3Client.switchChain({ id: chain.id });
@@ -30,9 +33,27 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
       if (e.code === 4902) {
         await web3Client.addChain({ chain });
         await web3Client.switchChain({ id: chain.id });
+        return true;
       }
+      addError("Current network not correct!");
+      return false;
     }
 
+    return true;
+  };
+  const getBrowserWalletInstance = async (network) => {
+    const chain = networkMap[network]
+    const [account] = await window.ethereum.request({ method: "eth_requestAccounts" });
+    web3Client = createWalletClient({
+      account,
+      chain,
+      transport: custom(window.ethereum),
+    }).extend(publicActions);
+
+    const rz = await ensureChain(network);
+    if (!rz) {
+      return false;
+    }
     address = web3Client.account.address;
   };
 
@@ -80,22 +101,27 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
       args,
     };
     if (value) params.value = value;
-    let rz = null
+    let rz = null;
     try {
       rz = await walletClient.simulateContract(params);
     } catch (err) {
-      console.log(`====> err :`, err)
-      return {error: err.toString()}
+      console.log(`====> err :`, err);
+      return { error: err.toString() };
     }
-    return rz
+    return rz;
   };
 
   const writeContract = async (contractName, functionName, { value = "", walletClient = null }, ...args) => {
     if (!walletClient) {
       walletClient = web3Client;
     }
+
+    const rz = await ensureChain(network);
+    if (!rz) {
+      throw new Error("Network error");
+    }
+
     try {
-      console.log(`====> args :`, args)
       const { request, result } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
       const hash = await walletClient.writeContract(request);
       const tx = await walletClient.waitForTransactionReceipt({

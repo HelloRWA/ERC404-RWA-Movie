@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   if (!config.tmdb.apiKey)
     throw new Error('TMDB API key is not set')
+
+  let rz = null
   try {
-    return await $fetch(event.context.params!.path, {
+    rz = await $fetch(event.context.params!.path, {
       baseURL: TMDB_API_URL,
       params: {
         api_key: config.tmdb.apiKey,
@@ -30,8 +32,10 @@ export default defineEventHandler(async (event) => {
   catch (e: any) {
     const status = e?.response?.status || 500
     setResponseStatus(event, status)
-    return {
+    rz = {
       error: String(e)?.replace(config.tmdb.apiKey, '***'),
     }
   }
+  console.log(`====> rz :`, rz)
+  return rz
 })

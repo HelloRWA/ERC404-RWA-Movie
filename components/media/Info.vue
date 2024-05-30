@@ -31,7 +31,7 @@ const directors = computed(() => props.item.credits?.crew.filter((person) => per
         object-cover
         :style="{ 'view-transition-name': `item-${props.item.id}` }"
       />
-      <TokenStats col-span-2 />
+      <TokenStats col-span-2 :item="props.item" />
     </div>
     <div lt-md:w="[calc(100vw-2rem)]" flex="~ col" md:p4 gap6>
       <div v-if="props.item.overview">

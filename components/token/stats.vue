@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const { item } = $defineProps<{
+  item: Object;
+}>();
+
 const stats = [
   { id: 1, name: "TVL", value: "4.56M" },
   { id: 2, name: "NFT Holders", value: "3.32k" },
@@ -6,7 +10,13 @@ const stats = [
   { id: 4, name: "SBT Sold", value: "1.23M" },
 ];
 
-let { isShow } = $(tokenLaunchStore());
+let { isShow, form } = $(tokenLaunchStore());
+
+watchEffect(() => {
+  if (!item || !item.id) return;
+  form.id = item.id;
+  form.name = item.original_title;
+});
 </script>
 
 <template>

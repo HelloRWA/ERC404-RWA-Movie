@@ -1,7 +1,6 @@
 export const bstStore = defineStore('bstStore', () => {
   const { writeContract, readContract, network, address } = $(evmWalletStore())
-  const { addLoading, addSuccess } = $(notificationStore())
-  
+  const { addLoading, addSuccess, addError } = $(notificationStore())
   let paymentName = $ref('')
   const payment = $computed(() => getContractAddress(paymentName, network))
   const queryPaymentAllowanceByProtocol = async (protocolName) => {
@@ -12,14 +11,21 @@ export const bstStore = defineStore('bstStore', () => {
   const ensurePaymentBalanceAndAllowance = async (protocolName, payAmount) => {
     const balance = await readContract(paymentName, 'balanceOf', {}, address)
     if (balance < payAmount) {
-      return 'Your Payment Balance is not enough to pay'
+      addError('Your Payment Balance is not enough to pay')
+      return false
     }
     const allowance = await queryPaymentAllowanceByProtocol(protocolName)
     if(allowance >= payAmount) return true
 
     const appAddress = getContractAddress(protocolName, network)
     const loading = addLoading('Approving allowance')
-    await writeContract(paymentName, 'approve', {}, appAddress, payAmount)
+    try {
+      await writeContract(paymentName, 'approve', {}, appAddress, payAmount)
+    } catch (err) {
+      addError(err.toString(), loading)
+      return false
+    }
+
     addSuccess('Approve allowance Succeed!', loading)
     return true
   }

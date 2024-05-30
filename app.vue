@@ -1,6 +1,5 @@
 <script setup>
 import "@unocss/reset/tailwind.css";
-import { hardhat, filecoinCalibration } from "viem/chains";
 
 useHead({
   htmlAttrs: {
@@ -28,12 +27,7 @@ useHead({
 const { getBrowserWalletInstance, network } = $(evmWalletStore());
 
 onMounted(async () => {
-  const networkMap = {
-    hardhat,
-    filecoinCalibration,
-  };
-
-  await getBrowserWalletInstance(networkMap[network]);
+  await getBrowserWalletInstance(network);
 });
 </script>
 
@@ -48,6 +42,7 @@ onMounted(async () => {
     <PhotoModal />
   </div>
   <Notification />
+  <BsAlertDialog />
 </template>
 
 <style>

@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@vue-macros/nuxt',
     'nuxt-lodash',
+    '@nuxtjs/supabase',
     '@pinia/nuxt'
   ],
   experimental: {
@@ -49,6 +50,17 @@ export default defineNuxtConfig({
   nitro: {
     routeRules: {
       '/**': { isr: false },
+    },
+  },
+  supabase: {
+    redirect: false,
+    clientOptions: {
+      auth: {
+        flowType: 'pkce',
+        detectSessionInUrl: true,
+        persistSession: true,
+        autoRefreshToken: true
+      },
     },
   },
   i18n: {
