@@ -5,10 +5,16 @@ This is the frontend code for the ERC404 RWA Movie project. It build on the  ope
 ## Features
 
 - [x] User can launch a new ERC404 token by any movie (need to pay 100 $BST)
-- [x] User can buy SBT of any movie, which can access the SBT permission discord channel for the movie
-- [x] User can buy Coin of any movie, which can access the coin permission discord channel for the movie, can setup differnt amount of coins with different channel.
-- [x] User can buy NFT of any movie, which can access the NFT permission discord channel for the movie
+- [x] User can buy SBT of any movie
+  - [ ] which can access the SBT permission discord channel for the movie
+- [x] User can buy Coin of any movie
+  - [ ] which can access the coin permission discord channel for the movie, can setup differnt amount of coins with different channel.
+- [x] User can buy NFT of any movie
+  - [ ] which can access the NFT permission discord channel for the movie
 - [x] User can unlock posts / blogs if they owned NFT/ Specify amount of coin or SBT. The condition can be different from different posts/blogs.
+- [ ] NFT can be trade on opensea
+- [ ] FT can be trade on opensea
+- [ ] NFT owner can edit NFT avatar, which shows on opensea
 
 ## Below is the README from the open source template [Nuxt Movie](https://github.com/nuxt/movies)
 <hr />
