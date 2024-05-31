@@ -21,12 +21,12 @@ defineProps<{
     <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'photos' }" :to="`/${type}/${item.id}/photos`">
       {{ $t("Media Photos") }}
     </NuxtLink>
-    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'feed' }" :to="`/${type}/${item.id}/feed`">
+    <!-- <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'feed' }" :to="`/${type}/${item.id}/feed`">
       {{ $t("Feed") }}
-    </NuxtLink>
+    </NuxtLink> -->
   </div>
   <MediaOverview v-if="tab === 'overview'" :item="item" :type="type" />
   <MediaVideos v-if="tab === 'videos'" :item="item" />
   <MediaPhotos v-if="tab === 'photos'" :item="item" />
-  <FeedList v-if="tab === 'feed'" :item="item" />
+  <!-- <FeedList v-if="tab === 'feed'" :item="item" /> -->
 </template>
