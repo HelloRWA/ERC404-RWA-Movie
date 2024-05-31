@@ -151,25 +151,25 @@ export const tokenStore = defineStore("tokenStore", () => {
   let isShowMint = $ref(true);
   const tokenPrice = $computed(() => {
     const priceMap = {
-      "Non-Fungible Token": tokenStats.ftPrice * tokenStats.ftSwapAmount,
+      "Non-Fungible Token": (tokenStats.ftPrice || 0n) * (tokenStats.ftSwapAmount || 0n),
       "Fungible Token": tokenStats.ftPrice,
       "Soulbound Token": tokenStats.sbtPrice,
     };
-    return priceMap[mintTier] || "0";
+    return priceMap[mintTier] || 0n;
   });
   let mintAmount = $ref(100);
-  // watchEffect(() => {
-  //   if (mintTier === "Fungible Token") return;
+  watchEffect(() => {
+    if (mintTier === "Fungible Token") return;
 
-  //   mintAmount = 1;
-  // });
+    mintAmount = 1;
+  });
   const payAmount = $computed(() => {
     const payMap = {
       "Non-Fungible Token": tokenPrice,
       "Fungible Token": tokenPrice * BigInt(mintAmount),
       "Soulbound Token": tokenPrice,
     };
-    return payMap[mintTier] || "0";
+    return payMap[mintTier] || 0n;
   });
 
   const doShowMint = (tier) => {
