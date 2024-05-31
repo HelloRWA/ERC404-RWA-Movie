@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import type { Media, MediaType } from "~/types";
+import type { Media, MediaType, TabType } from "~/types";
 
 defineProps<{
   item: Media;
   type: MediaType;
+  tab: TabType;
 }>();
 
-const tab = ref<"overview" | "videos" | "photos">("overview");
+// const tab = ref<"overview" | "videos" | "photos">("overview");
 </script>
 
 <template>
   <div flex items-center justify-center gap8 py6>
-    <button n-tab :class="{ 'n-tab-active': tab === 'overview' }" @click="tab = 'overview'">
+    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'overview' }" :to="`/${type}/${item.id}/`">
       {{ $t("Overview") }}
-    </button>
-    <button n-tab :class="{ 'n-tab-active': tab === 'videos' }" @click="tab = 'videos'">
+    </NuxtLink>
+    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'videos' }" :to="`/${type}/${item.id}/videos`">
       {{ $t("Videos") }}
-    </button>
-    <button n-tab :class="{ 'n-tab-active': tab === 'photos' }" @click="tab = 'photos'">
+    </NuxtLink>
+    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'photos' }" :to="`/${type}/${item.id}/photos`">
       {{ $t("Media Photos") }}
-    </button>
+    </NuxtLink>
   </div>
   <MediaOverview v-if="tab === 'overview'" :item="item" :type="type" />
   <MediaVideos v-if="tab === 'videos'" :item="item" />
