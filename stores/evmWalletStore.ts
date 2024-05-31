@@ -31,12 +31,12 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
       await web3Client.switchChain({ id: chain.id });
     } catch (e) {
       if (e.code === 4902) {
-        await web3Client.addChain({ chain });
-        await web3Client.switchChain({ id: chain.id });
-        return true;
+        await web3Client.addChain({ chain })
+        await web3Client.switchChain({ id: chain.id })
+        return true
       }
-      addError("Current network not correct!");
-      return false;
+      addError('Current network not correct!')
+      return false
     }
 
     return true;
@@ -51,39 +51,35 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     }).extend(publicActions);
 
     const rz = await ensureChain(network);
-    if (!rz) {
-      return false;
-    }
+    if (!rz)
+      return false
+
     address = web3Client.account.address;
-  };
+  }
 
   const readContract = async (contractName, functionName, { walletClient = null }, ...args) => {
-    if (!walletClient) {
-      walletClient = web3Client;
-    }
+    if (!walletClient)
+      walletClient = web3Client
 
-    const network = useCamelCase(walletClient.chain.name);
-    let name = contractName;
-    if (contractName.name) {
-      name = contractName.name;
-    }
-    let { address, abi } = getContractInfo(name, network);
-    if (contractName.contractAddress) {
-      address = contractName.contractAddress;
-    }
+    let name = contractName
+    if (contractName.name)
+      name = contractName.name
 
-    if (!address || address === "undefined") {
-      return;
-    }
+    let { address, abi } = getContractInfo(name, network)
+    if (contractName.contractAddress)
+      address = contractName.contractAddress
+
+    if (!address || address === 'undefined')
+      return
 
     const params = {
       address,
       abi,
       functionName,
       args,
-    };
+    }
 
-    return walletClient.readContract(params);
+    return walletClient.readContract(params)
   };
 
   const simulateContract = async ({ contractName, functionName, value = "", walletClient = null }, ...args) => {

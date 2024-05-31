@@ -37,5 +37,6 @@ export const doGetRequest = async (url, query = {}) => {
     method: 'GET',
     query,
   }
+
   return $fetch(url, opts)
 }

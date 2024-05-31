@@ -20,6 +20,8 @@ export default defineConfig({
     ["border-base", "border-gray-400/20"],
     ["flex-bc", "flex justify-between items-center"],
     ["flex-cc", "flex justify-center items-center"],
+    ["dr", 'bg-red'],
+    ["db", 'bg-blue'],
     ["btn-primary", "bg-primary opacity-80 rounded-md font-semibold shadow-sm mt-5 text-sm text-white w-full py-2 px-3 hover:(opacity-100)"],
   ],
   rules: [[/^view-transition-([\w-]+)$/, ([, name]) => ({ "view-transition-name": name })]],

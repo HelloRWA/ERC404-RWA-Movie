@@ -1,16 +1,39 @@
 export const tplStore = defineStore('tplStore', () => {
-  const items = $ref([
-    {
-      id: 334,
-      score: 100,
-    },
-    {
-      id: 223,
-      score: 20,
-    },
-  ])
+  const {addLoading, alertError, alertSuccess} = $(notificationStore())
+  let isLoading = $ref(false)
+  const form = $ref({})
+  let item = $ref({})
+  let items = $ref([])
 
-  return $$({ topicMap, items })
+  const loadData = async () => {
+    if (isLoading) return
+    isLoading = true
+
+    const {data, error} = $(await useGetRequest('/api/xxx', {page: 1}))
+    if (error) {
+      isLoading = false
+      return alertError(error)
+    }
+    items = data
+    isLoading = false
+  }
+
+  const doSubmit = async () => {
+    if (isLoading) return
+    isLoading = true
+
+    const loading = addLoading('some middle step loading information')
+    const { error } = await doPost('/api/xxx/create', form)
+    if (error) {
+      isLoading = false
+      return alertError(error, null, loading)
+    }
+
+    alertSuccess('Submit Successed!', null, loading)
+    isLoading = false
+  }
+
+  return $$({ isLoading, form, item, items, loadData, doSubmit })
 })
 
 if (import.meta.hot)

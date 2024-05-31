@@ -359,31 +359,41 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amount_",
+        "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "payment",
+        "type": "address"
       }
     ],
     "name": "buyFT",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "subTokenId_",
+        "name": "subTokenId",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "payment",
+        "type": "address"
       }
     ],
     "name": "buyNFT",
@@ -395,13 +405,18 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "payment",
+        "type": "address"
       }
     ],
     "name": "buySBT",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -427,7 +442,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
@@ -445,8 +460,13 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "payment",
+        "type": "address"
       }
     ],
     "name": "distributeSBTIncome",
@@ -476,7 +496,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -664,7 +684,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
@@ -725,12 +745,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "subTokenId_",
+        "name": "subTokenId",
         "type": "uint256"
       }
     ],
@@ -743,18 +763,72 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "subTokenId_",
+        "name": "subTokenId",
         "type": "uint256"
       }
     ],
     "name": "swapToNFT",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenStat",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "ftSwapAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ftAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ftHolderCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftHolderCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sbtSold",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ftPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sbtPrice",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -836,7 +910,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -849,7 +923,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId_",
+        "name": "tokenId",
         "type": "uint256"
       }
     ],
@@ -857,9 +931,5 @@
     "outputs": [],
     "stateMutability": "view",
     "type": "function"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
   }
 ]
