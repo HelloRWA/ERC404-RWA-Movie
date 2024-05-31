@@ -30,7 +30,11 @@ export const bstStore = defineStore('bstStore', () => {
     return true
   }
 
-  return $$({ ensurePaymentBalanceAndAllowance, paymentName, payment})
+  const updatePayment = payment => {
+    paymentName = payment
+  }
+
+  return $$({ updatePayment, ensurePaymentBalanceAndAllowance, paymentName, payment})
 })
 
 if (import.meta.hot)

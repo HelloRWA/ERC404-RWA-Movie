@@ -27,7 +27,7 @@ export default defineConfig({
   rules: [[/^view-transition-([\w-]+)$/, ([, name]) => ({ "view-transition-name": name })]],
   theme: {
     colors: {
-      primary: "#40c1ad",
+      primary: "#6366f1",
     },
   },
   presets: [
