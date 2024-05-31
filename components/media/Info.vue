@@ -40,10 +40,13 @@ onMounted(async () => {
       <div col-span-2 lt-md:w="[calc(100vw-2rem)]" flex="~ col" gap6>
         <div flex-1>
           <div v-if="props.item.overview">
-            <h2 text-3xl mb4>
-              {{ $t("Storyline") }}
+            <h2 text-3xl mb4 flex-bc>
+              <div>
+                {{ $t("Storyline") }}
+              </div>
+              <ExternalLinks :links="externalIds" />
             </h2>
-            <div op80 v-text="props.item.overview" />
+            <div op80 v-text="props.item.overview" mb-5 />
           </div>
 
           <div text-sm op80>
@@ -146,7 +149,6 @@ onMounted(async () => {
               </template>
             </ul>
           </div>
-          <ExternalLinks :links="externalIds" />
         </div>
         <TokenStats />
       </div>

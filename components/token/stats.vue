@@ -23,8 +23,11 @@ const stats = $computed(() => {
         </button>
       </div>
       <div v-else>
-        <h2 text-3xl mb4>
-          {{ $t("Token Stats") }}
+        <h2 text-3xl mb4 flex-bc>
+          <span> {{ $t("Token Stats") }}</span>
+          <div class="px-2">
+            <a href="#" class="flex h-6 w-6 n-link i-simple-icons-opensea">OpenSea</a>
+          </div>
         </h2>
         <dl class="rounded-2xl text-center grid gap-0.5 grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-4">
           <div v-for="stat in stats" :key="stat.id" class="flex flex-col bg-white/5 p-8">
