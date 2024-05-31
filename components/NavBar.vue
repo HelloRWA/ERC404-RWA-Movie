@@ -9,6 +9,9 @@
     <NuxtLink v-slot="{ isActive }" to="/tv" title="TV Shows">
       <div text-2xl :class="isActive ? 'i-ph-television-simple-fill text-primary' : 'i-ph-television-simple'" />
     </NuxtLink>
+    <NuxtLink v-slot="{ isActive }" to="/trade" title="Trade">
+      <div text-2xl :class="isActive ? ' i-ph-chart-line-fill text-primary' : 'i-ph-chart-line-light'" />
+    </NuxtLink>
     <NuxtLink v-slot="{ isActive }" to="/search" title="Search">
       <div text-2xl :class="isActive ? 'i-ph-magnifying-glass-fill text-primary' : 'i-ph-magnifying-glass'" />
     </NuxtLink>

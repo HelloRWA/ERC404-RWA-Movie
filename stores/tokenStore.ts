@@ -37,7 +37,7 @@ export const tokenStore = defineStore("tokenStore", () => {
 
     itemOffChainData = item_;
     form.id = item_.id;
-    form.name = item_.original_title;
+    form.name = item_.title || item_.name;
     item = await doGetRequest(`/api/token/${item_.id}`);
     if (item?.tokenId) {
       const rz = await readContract("ERC404_RWA", "tokenStat", {}, item.tokenId);
