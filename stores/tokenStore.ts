@@ -158,11 +158,11 @@ export const tokenStore = defineStore("tokenStore", () => {
     return priceMap[mintTier] || "0";
   });
   let mintAmount = $ref(100);
-  watchEffect(() => {
-    if (mintTier === "Fungible Token") return;
+  // watchEffect(() => {
+  //   if (mintTier === "Fungible Token") return;
 
-    mintAmount = 1;
-  });
+  //   mintAmount = 1;
+  // });
   const payAmount = $computed(() => {
     const payMap = {
       "Non-Fungible Token": tokenPrice,

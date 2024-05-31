@@ -15,6 +15,12 @@ const props = withDefaults(
 
 const externalIds = computed(() => ({ ...props.item.external_ids, homepage: props.item.homepage }));
 const directors = computed(() => props.item.credits?.crew.filter((person) => person.job === "Director"));
+
+const { loadData, hasTokenId } = $(tokenStore());
+
+onMounted(async () => {
+  await loadData(props.item);
+});
 </script>
 
 <template>
@@ -142,9 +148,9 @@ const directors = computed(() => props.item.credits?.crew.filter((person) => per
           </div>
           <ExternalLinks :links="externalIds" />
         </div>
-        <TokenStats :item="props.item" />
+        <TokenStats />
       </div>
     </div>
-    <TokenPrice :item="props.item" />
+    <TokenPrice v-if="hasTokenId" />
   </div>
 </template>

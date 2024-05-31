@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isShow, form, doSubmit, isLoading } = $(tokenLaunchStore());
+const { isShow, form, doSubmit, isLoading } = $(tokenStore());
 </script>
 
 <template>

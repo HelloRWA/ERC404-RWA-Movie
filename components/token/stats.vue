@@ -1,23 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon } from "@heroicons/vue/20/solid";
-
-const { item } = $defineProps<{
-  item: Object;
-}>();
-
-const id = $computed(() => item?.id);
-
-const { isLoading, isShow, form, hasTokenId, tokenStats, loadData, item: tokenData } = $(tokenLaunchStore());
-
-onMounted(async () => {
-  await loadData(id);
-});
-
-watchEffect(() => {
-  if (!id) return;
-  form.id = id;
-  form.name = item.original_title;
-});
+const { isLoading, isShow, hasTokenId, tokenStats } = $(tokenStore());
 
 const stats = $computed(() => {
   const tvl = (tokenStats.ftAmount + tokenStats.nftAmount * tokenStats.ftSwapAmount) * tokenStats.ftPrice + tokenStats.sbtSold;
