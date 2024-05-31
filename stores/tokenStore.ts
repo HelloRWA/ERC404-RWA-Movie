@@ -1,14 +1,13 @@
 export const tokenStore = defineStore("tokenStore", () => {
-  const { ensurePaymentBalanceAndAllowance, payment } = $(bstStore());
-  const { writeContract, readContract } = $(evmWalletStore());
-  const { alertError, alertSuccess } = $(notificationStore());
-
-  const { updatePayment } = $(bstStore());
+  const { ensurePaymentBalanceAndAllowance, updatePayment, payment } = $(bstStore());
   updatePayment("BSTEntropy");
 
+  const { writeContract, readContract, address } = $(evmWalletStore());
+  const { alertError, alertSuccess } = $(notificationStore());
+
   let item = $ref({});
-  let itemData = $ref({});
-  const hasTokenId = $computed(() => item?.tokenId);
+  let itemOffChainData = $ref({});
+  const tokenId = $computed(() => item?.tokenId);
 
   let isShow = $ref(false);
   const form = $ref({
@@ -26,6 +25,7 @@ export const tokenStore = defineStore("tokenStore", () => {
     nftAmount: 0n,
     ftHolderCount: 0n,
     nftHolderCount: 0n,
+    ftPrice: 0n,
     sbtSold: 0n,
   });
 
@@ -35,7 +35,7 @@ export const tokenStore = defineStore("tokenStore", () => {
     if (isLoading) return;
     isLoading = true;
 
-    itemData = item_;
+    itemOffChainData = item_;
     form.id = item_.id;
     form.name = item_.original_title;
     item = await doGetRequest(`/api/token/${item_.id}`);
@@ -96,15 +96,14 @@ export const tokenStore = defineStore("tokenStore", () => {
     isShow = false;
     isLoading = false;
 
-    alertSuccess("Token Launch successed!", () => loadData(form.id));
+    alertSuccess("Token Launch successed!", () => loadData(itemOffChainData));
   };
-
 
   const tiers = $computed(() => {
     return [
       {
         name: "Non-Fungible Token",
-        price: tokenStats.ftPrice ? tokenStats.ftPrice * 10000n : 0n,
+        price: tokenStats.ftPrice ? tokenStats.ftPrice * tokenStats.ftSwapAmount : 0n,
         priceSuffix: "$BST / NFT",
         description: "Credentials for avid fans of this film.",
         features: [
@@ -145,10 +144,11 @@ export const tokenStore = defineStore("tokenStore", () => {
       },
     ];
   });
-  const tierNameList = $computed(()=> tiers.map(item => item.name))
-  
+  const tierNameList = $computed(() => tiers.map((item) => item.name));
+
   let mintTier = $ref("Non-Fungible Token");
-  let isShowMint = $ref(true);
+  let subTokenId = $ref(1);
+  let isShowMint = $ref(false);
   const tokenPrice = $computed(() => {
     const priceMap = {
       "Non-Fungible Token": (tokenStats.ftPrice || 0n) * (tokenStats.ftSwapAmount || 0n),
@@ -159,6 +159,7 @@ export const tokenStore = defineStore("tokenStore", () => {
   });
   let mintAmount = $ref(100);
   watchEffect(() => {
+    console.log(`====> mintTier, mintAmount :`, mintTier, mintAmount);
     if (mintTier === "Fungible Token") return;
 
     mintAmount = 1;
@@ -177,53 +178,52 @@ export const tokenStore = defineStore("tokenStore", () => {
     mintTier = tier;
   };
 
+  let isSubmitMint = $ref(false);
+
   const doSubmitMint = async () => {
-    if (isLoading) return;
-    isLoading = true;
+    if (isSubmitMint) return;
+    isSubmitMint = true;
 
-    // // create token data with status 'isLaunching'
-    // const { data, error } = await doPost("/api/token/create", form);
-    // if (error) {
-    //   alertError(error);
-    //   isLoading = false;
-    //   return;
-    // }
-    // if (data.status === "launched") {
-    //   alertError("Token already launched!", () => {
-    //     isLoading = false;
-    //     isShow = true;
-    //   });
-    //   return;
-    // }
+    const paymentRz = await ensurePaymentBalanceAndAllowance("ERC404_RWA", payAmount);
+    if (!paymentRz) {
+      isSubmitMint = false;
+      return;
+    }
 
-    // const payAmount = parseEther("100");
-    // const paymentRz = await ensurePaymentBalanceAndAllowance("ERC404_RWA", payAmount);
-    // if (!paymentRz) {
-    //   isLoading = false;
-    //   return;
-    // }
+    let rz = {};
+    switch (mintTier) {
+      case "Soulbound Token":
+        rz = await writeContract("ERC404_RWA", "buySBT", {}, tokenId, payment);
+        break;
+      case "Non-Fungible Token":
+        rz = await writeContract("ERC404_RWA", "buyNFT", {}, tokenId, subTokenId, payment);
+        break;
+      case "Fungible Token":
+        rz = await writeContract("ERC404_RWA", "buyFT", {}, tokenId, mintAmount, payment);
+        break;
+      default:
+        isSubmitMint = false;
+        return alertError("Unsupported tier");
+    }
 
-    // const params = [form.name, parseEther(form.sbtPrice + ""), parseEther(form.ftPrice + ""), form.ftSwapAmount, form.payment];
-    // const { result: tokenId } = await writeContract("ERC404_RWA", "launch", {}, ...params);
-    // // update token status to be 'launched'
-    // const rz = await doPost("/api/token/update", {
-    //   id: form.id,
-    //   tokenId: tokenId.toString(),
-    // });
-    // if (rz.error) {
-    //   alertError(rz.error, () => {
-    //     isShow = true;
-    //   });
-    // }
-    // isShow = false;
-    // isLoading = false;
+    if (rz.error) {
+      alertError(rz.error, () => {
+        isShowMint = true;
+        isSubmitMint = false;
+      });
+      return;
+    }
+    isShowMint = false;
+    isSubmitMint = false;
 
-    // alertSuccess("Token Launch successed!", () => loadData(form.id));
-  }
+    alertSuccess("Mint token successed!", () => loadData(itemOffChainData));
+  };
 
   return $$({
     isShow,
     isShowMint,
+    isSubmitMint,
+    subTokenId,
     doShowMint,
     doSubmitMint,
     tiers,
@@ -236,8 +236,8 @@ export const tokenStore = defineStore("tokenStore", () => {
     isLoading,
     form,
     item,
-    itemData,
-    hasTokenId,
+    itemOffChainData,
+    tokenId,
     loadData,
     doSubmit,
   });

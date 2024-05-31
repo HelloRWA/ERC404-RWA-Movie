@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const { isLoading, isShow, hasTokenId, tokenStats } = $(tokenStore());
+const { isLoading, isShow, tokenId, tokenStats } = $(tokenStore());
 
 const stats = $computed(() => {
   const tvl = (tokenStats.ftAmount + tokenStats.nftAmount * tokenStats.ftSwapAmount) * tokenStats.ftPrice + tokenStats.sbtSold;
   return [
-    { id: 1, name: "TVL", value: tvl || "0" },
+    { id: 1, name: "TVL ($BST)", value: humanFormatEther(tvl || "0") },
     { id: 2, name: "NFT Holders", value: tokenStats.nftHolderCount },
     { id: 3, name: "FT Holders", value: tokenStats.ftHolderCount },
-    { id: 4, name: "SBT Sold", value: tokenStats.sbtSold },
+    { id: 4, name: "SBT Income ($BST)", value: humanFormatEther(tokenStats.sbtSold) },
   ];
 });
 </script>
@@ -15,7 +15,7 @@ const stats = $computed(() => {
 <template>
   <div>
     <Loading :is-loading="isLoading" class="flex-col flex h-full mx-auto max-w-2xl lg:max-w-none">
-      <div v-if="!hasTokenId" class="flex flex-col bg-white/5 rounded-2xl text-center py-10 items-center">
+      <div v-if="!tokenId" class="flex flex-col bg-white/5 rounded-2xl text-center py-10 items-center">
         <h3 text-2xl mb-5>Token is not launched yet.</h3>
         <button flex="~ gap2" items-center p="x6 y3" bg="gray/15 hover:gray/20" transition :title="$t('Launch Token')" @click="isShow = true">
           <div i-heroicons-rocket-launch-16-solid />

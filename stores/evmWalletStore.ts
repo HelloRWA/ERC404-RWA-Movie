@@ -90,6 +90,7 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     const network = useCamelCase(walletClient.chain.name);
 
     const { address, abi } = getContractInfo(contractName, network);
+    // console.log(`====> address, abi, contractName, network :`, address, abi, contractName, network, functionName)
     const params = {
       address,
       abi,
@@ -124,14 +125,22 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
         hash,
       });
       if (tx.status !== "success") {
-        throw new Error("tx error");
+        console.error(tx)
+        return {
+          error: 'tx error',
+          tx
+        }
+        // throw new Error("tx error");
       }
       return {
         tx,
         result,
       };
-    } catch (err) {
-      throw new Error(err);
+    } catch (error) {
+      return {
+        error
+      }
+      // throw new Error(error);
     }
   };
 
