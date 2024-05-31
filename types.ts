@@ -1,5 +1,5 @@
 export type MediaType = "movie" | "tv";
-export type TabType = "overview" | "videos" | "photos" | "forum";
+export type TabType = "overview" | "videos" | "photos" | "feed";
 
 export interface Media {
   adult: boolean;
