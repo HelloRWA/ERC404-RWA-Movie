@@ -18,17 +18,14 @@ export default defineEventHandler(async (event) => {
   if (isNFT > 0) {
     tokenId = isNFT
     subTokenId = tokenIdFromUser % divBy
-    console.log(`====> divBy, tokenId, subTokenId :`, divBy, tokenId, subTokenId)
-
     const subTokenRz = await adminClient.from('Movie_Token').select('*').eq('tokenId', tokenId).eq('subTokenId', subTokenId).single()
     if (!subTokenRz.data) {
       return defaultData
     }
-    console.log(`====> subTokenRz :`, subTokenRz)
   }
 
-  const { data } = await adminClient.from('Movie_Token').select('*').eq('tokenId', tokenId).single()
-  console.log(`====> data :`, data.tokenId, tokenId)
+  const { data } = await adminClient.from('Movie_Token').select('*').eq('tokenId', tokenId.toString()).is('subTokenId', null).single()
+
   if (!data) {
     // show movie platform information
     return defaultData
@@ -71,8 +68,16 @@ export default defineEventHandler(async (event) => {
     })
   })
 
+  if (isNFT > 0) {
+    attributes.push({
+      trait_type: 'tokenId',
+      value: tokenId,
+    })
+  }
+
   return {
-    tokenId,
+    tokenId: isNFT > 0 ? tokenIdFromUser : tokenId,
+    isNFT: isNFT > 0 ? true : false,
     id, name, status, created_at,
     description,
     decimals: 1,
