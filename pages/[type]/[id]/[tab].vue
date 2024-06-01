@@ -12,7 +12,6 @@ const route = useRoute();
 const type = computed(() => (route.params.type as MediaType) || "movie");
 const id = computed(() => route.params.id as string);
 const tab = computed(() => route.params.tab as string);
-console.log(`====> tab :`, tab);
 const [item, recommendations] = await Promise.all([getMedia(type.value, id.value), getRecommendations(type.value, id.value)]);
 const $img = useImage();
 

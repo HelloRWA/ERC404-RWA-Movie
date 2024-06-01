@@ -90,7 +90,6 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
 
     const network = useCamelCase(walletClient.chain.name);
     const { address, abi } = getContractInfo(contractName, network);
-    // console.log(`====> address, abi, contractName, network :`, address, abi, contractName, network, functionName)
     const params = {
       address,
       abi,
@@ -101,9 +100,9 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     let rz = null;
     try {
       rz = await walletClient.simulateContract(params);
-    } catch (err) {
-      console.log(`====> err :`, err);
-      return { error: err.toString() };
+    } catch (error) {
+      console.error(error)
+      return { error, abi };
     }
     return {
       ...rz,
@@ -118,18 +117,27 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
 
     const rz = await ensureChain(network);
     if (!rz) {
-      throw new Error("Network error");
+      return {
+        error: 'ensureChain failed'
+      }
     }
 
     try {
-      const { request, result, abi } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
+      const { request, result, abi, error } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
+      if (error) {
+        return {
+          error
+        }
+      }
       const hash = await walletClient.writeContract(request);
       const tx = await walletClient.waitForTransactionReceipt({
         hash,
       });
       if (tx.status !== "success") {
-        console.error(tx)
-        throw new Error('tx status error', {error: tx})
+        return {
+          error: `Tx status is not success`,
+          detail: tx
+        }
       }
       let logs = {}
       if (eventName.length > 0) {
@@ -145,8 +153,9 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
         logs,
       };
     } catch (error) {
-      console.error(error)
-      throw new Error(error);
+      return {
+        error
+      }
     }
   };
 

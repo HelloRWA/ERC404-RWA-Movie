@@ -10,7 +10,8 @@ export default defineEventHandler(async (event) => {
   ])
 
   const { data } = await adminClient.from('Movie_Token').select('*')
-      .eq('id', id)
+    .eq('offchainId', id)
+    .is('subTokenId', null)
     .single()
   
   if (!data) {
@@ -28,7 +29,7 @@ export default defineEventHandler(async (event) => {
     status: 'launched',
     tokenId,
   }
-  const rz = await adminClient.from('Movie_Token').update(opts).eq('id', id).select()
+  const rz = await adminClient.from('Movie_Token').update(opts).eq('offchainId', id).select()
 
   return rz
 })

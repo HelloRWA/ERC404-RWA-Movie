@@ -2,7 +2,7 @@ export const tokenStore = defineStore("tokenStore", () => {
   const { ensurePaymentBalanceAndAllowance, updatePayment, payment } = $(bstStore());
   updatePayment("BSTEntropy");
 
-  const { writeContract, readContract, address } = $(evmWalletStore());
+  const { writeContract, readContract, address, network } = $(evmWalletStore());
   const { alertError, alertSuccess } = $(notificationStore());
 
   let item = $ref({});
@@ -51,6 +51,7 @@ export const tokenStore = defineStore("tokenStore", () => {
         ftPrice: rz[6],
         sbtPrice: rz[7]
       };
+      console.log(`====> tokenStats :`, tokenStats)
     }
     isLoading = false;
   };
@@ -166,7 +167,6 @@ export const tokenStore = defineStore("tokenStore", () => {
   });
   let mintAmount = $ref(100);
   watchEffect(() => {
-    console.log(`====> mintTier, mintAmount :`, mintTier, mintAmount);
     if (mintTier === "Fungible Token") return;
 
     mintAmount = 1;
@@ -198,23 +198,49 @@ export const tokenStore = defineStore("tokenStore", () => {
     }
 
     let rz = {};
+    let error = null;
     switch (mintTier) {
       case "Soulbound Token":
-        rz = await writeContract("ERC404_RWA", "buySBT", {}, tokenId, payment);
+        const sbtId = 0n;
+        rz = await writeContract("ERC404_RWA", "buySBT", {}, tokenId, sbtId, payment);
+        if (rz.error) {
+          console.log(`====> rz.error :`, rz.error)
+          error = 'buySBT error'
+        }
         break;
       case "Non-Fungible Token":
-        rz = await writeContract("ERC404_RWA", "buyNFT", {}, tokenId, subTokenId, payment);
+        // rz = await writeContract("ERC404_RWA", "buyNFT", {}, tokenId, subTokenId, payment);
+        if (rz.error) {
+          console.log(`====> rz.error :`, rz.error)
+          error = 'buyNFT error'
+        } else {
+           const rz = await doPost("/api/token/createNFT", {
+             tokenId: tokenId.toString(),
+             subTokenId: subTokenId.toString(),
+             address,
+             network,
+          });
+          if (rz.error) {
+            alertError(rz.error, () => {
+              isShow = true;
+            });
+          }
+        }
         break;
       case "Fungible Token":
         rz = await writeContract("ERC404_RWA", "buyFT", {}, tokenId, mintAmount, payment);
+        if (rz.error) {
+          console.log(`====> rz.error :`, rz.error)
+          error = 'buyFT error'
+        }
         break;
       default:
         isSubmitMint = false;
         return alertError("Unsupported tier");
     }
 
-    if (rz.error) {
-      alertError(rz.error, () => {
+    if (error) {
+      alertError(error, () => {
         isShowMint = true;
         isSubmitMint = false;
       });

@@ -19,7 +19,10 @@ const directors = computed(() => props.item.credits?.crew.filter((person) => per
 const { loadData, tokenId } = $(tokenStore());
 
 onMounted(async () => {
-  await loadData(props.item);
+  await loadData({
+    ...props.item,
+    type: props.type,
+  });
 });
 </script>
 
