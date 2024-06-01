@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { isLoading, isShow, tokenId, tokenStats } = $(tokenStore());
-
+const { network } = $(evmWalletStore());
 const stats = $computed(() => {
   const tvl = (tokenStats.ftAmount + tokenStats.nftAmount * tokenStats.ftSwapAmount) * tokenStats.ftPrice + tokenStats.sbtSold;
   return [
@@ -9,6 +9,11 @@ const stats = $computed(() => {
     { id: 3, name: "FT Holders", value: tokenStats.ftHolderCount },
     { id: 4, name: "SBT Income ($BST)", value: humanFormatEther(tokenStats.sbtSold) },
   ];
+});
+
+const linkToOpenSea = $computed(() => {
+  const address = getContractAddress("ERC404_RWA", network);
+  return `https://testnets.opensea.io/assets/amoy/${address}/${tokenId}`;
 });
 </script>
 
@@ -26,7 +31,7 @@ const stats = $computed(() => {
         <h2 text-3xl mb4 flex-bc>
           <span> {{ $t("Token Stats") }}</span>
           <div class="px-2">
-            <a href="#" class="flex h-6 w-6 n-link i-simple-icons-opensea">OpenSea</a>
+            <a :href="linkToOpenSea" target="_blank" class="flex h-6 w-6 n-link i-simple-icons-opensea">OpenSea</a>
           </div>
         </h2>
         <dl class="rounded-2xl text-center grid gap-0.5 grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-4">
