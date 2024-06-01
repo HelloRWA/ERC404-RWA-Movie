@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
     'network',
   ])
 
-  console.log(`====> tokenId, subTokenId, network, address :`, tokenId, subTokenId, network, address)
   const { data } = await adminClient.from('Movie_Token').select('*')
       .eq('tokenId', tokenId)
       .eq('subTokenId', subTokenId)
@@ -33,14 +32,12 @@ export default defineEventHandler(async (event) => {
     transport: http(),
   })
   const ownedToken = await publicClient.readContract(params)
-  console.log(`====> xxxxownedToken :`, ownedToken, ownedToken === 1n)
-  if (ownedToken === 1n) {
+  if (ownedToken > 0) {
     const rz = await adminClient.from('Movie_Token').insert({
       tokenId,
       subTokenId,
       status: 'launched',
     }).select().single()
-    console.log(`====> rz :`, rz)
     return rz.data
   }
   
