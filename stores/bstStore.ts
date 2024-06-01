@@ -16,12 +16,13 @@ export const bstStore = defineStore('bstStore', () => {
     }
     const allowance = await queryPaymentAllowanceByProtocol(protocolName)
     if(allowance >= payAmount) return true
-
     const appAddress = getContractAddress(protocolName, network)
     const loading = addLoading('Approving allowance')
     try {
-      await writeContract(paymentName, 'approve', {}, appAddress, payAmount)
+      const rz = await writeContract(paymentName, 'approve', {eventName: 'Approval'}, appAddress, payAmount)
+      console.log(`====> rz :`, rz)
     } catch (err) {
+      console.error(err)
       addError(err.toString(), loading)
       return false
     }

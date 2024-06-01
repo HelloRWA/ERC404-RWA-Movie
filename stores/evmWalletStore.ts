@@ -7,6 +7,7 @@ import {
   custom,
   parseAbiItem,
   formatEther,
+  parseEventLogs,
   http,
   publicActions,
   keccak256,
@@ -88,7 +89,6 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     }
 
     const network = useCamelCase(walletClient.chain.name);
-
     const { address, abi } = getContractInfo(contractName, network);
     // console.log(`====> address, abi, contractName, network :`, address, abi, contractName, network, functionName)
     const params = {
@@ -105,10 +105,13 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
       console.log(`====> err :`, err);
       return { error: err.toString() };
     }
-    return rz;
+    return {
+      ...rz,
+      abi,
+    };
   };
 
-  const writeContract = async (contractName, functionName, { value = "", walletClient = null }, ...args) => {
+  const writeContract = async (contractName, functionName, { value = "", walletClient = null, eventName = [] }, ...args) => {
     if (!walletClient) {
       walletClient = web3Client;
     }
@@ -119,28 +122,31 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     }
 
     try {
-      const { request, result } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
+      const { request, result, abi } = await simulateContract({ contractName, functionName, value, walletClient }, ...args);
       const hash = await walletClient.writeContract(request);
       const tx = await walletClient.waitForTransactionReceipt({
         hash,
       });
       if (tx.status !== "success") {
         console.error(tx)
-        return {
-          error: 'tx error',
-          tx
-        }
-        // throw new Error("tx error");
+        throw new Error('tx status error', {error: tx})
+      }
+      let logs = {}
+      if (eventName.length > 0) {
+        logs = useKeyBy(parseEventLogs({ 
+          abi, 
+          eventName,
+          logs: tx.logs,
+        }), 'eventName')
       }
       return {
         tx,
         result,
+        logs,
       };
     } catch (error) {
-      return {
-        error
-      }
-      // throw new Error(error);
+      console.error(error)
+      throw new Error(error);
     }
   };
 

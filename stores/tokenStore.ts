@@ -38,7 +38,7 @@ export const tokenStore = defineStore("tokenStore", () => {
     itemOffChainData = item_;
     form.id = item_.id;
     form.name = item_.title || item_.name;
-    item = await doGetRequest(`/api/token/${item_.id}`);
+    item = await doGetRequest(`/api/${item_.id}`);
     if (item?.tokenId) {
       const rz = await readContract("ERC404_RWA", "tokenStat", {}, item.tokenId);
       tokenStats = {
@@ -60,7 +60,10 @@ export const tokenStore = defineStore("tokenStore", () => {
     isLoading = true;
 
     // create token data with status 'isLaunching'
-    const { data, error } = await doPost("/api/token/create", form);
+    const { data, error } = await doPost("/api/token/create", {
+      ...form,
+      meta: itemOffChainData,
+    });
     if (error) {
       alertError(error);
       isLoading = false;
@@ -82,7 +85,10 @@ export const tokenStore = defineStore("tokenStore", () => {
     }
 
     const params = [form.name, parseEther(form.sbtPrice + ""), parseEther(form.ftPrice + ""), form.ftSwapAmount, form.payment];
-    const { result: tokenId } = await writeContract("ERC404_RWA", "launch", {}, ...params);
+
+    const { logs } = await writeContract("ERC404_RWA", "launchToken", { eventName: ['TokenLaunched', 'SBTCreated'] }, ...params);
+    const tokenId = useGet(logs, 'TokenLaunched.args.tokenId')
+    const sbtId = useGet(logs, 'SBTCreated.args.')
     // update token status to be 'launched'
     const rz = await doPost("/api/token/update", {
       id: form.id,

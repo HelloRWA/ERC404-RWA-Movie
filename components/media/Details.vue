@@ -21,6 +21,12 @@ defineProps<{
     <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'photos' }" :to="`/${type}/${item.id}/photos`">
       {{ $t("Media Photos") }}
     </NuxtLink>
+    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'nfts' }" :to="`/${type}/${item.id}/nfts`">
+      {{ $t("NFTs") }}
+    </NuxtLink>
+    <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'blog' }" :to="`/${type}/${item.id}/blog`">
+      {{ $t("Blog") }}
+    </NuxtLink>
     <!-- <NuxtLink n-tab :class="{ 'n-tab-active': tab === 'feed' }" :to="`/${type}/${item.id}/feed`">
       {{ $t("Feed") }}
     </NuxtLink> -->
