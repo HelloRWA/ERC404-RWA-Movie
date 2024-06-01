@@ -209,7 +209,7 @@ export const tokenStore = defineStore("tokenStore", () => {
         }
         break;
       case "Non-Fungible Token":
-        // rz = await writeContract("ERC404_RWA", "buyNFT", {}, tokenId, subTokenId, payment);
+        rz = await writeContract("ERC404_RWA", "buyNFT", {}, tokenId, subTokenId, payment);
         if (rz.error) {
           console.log(`====> rz.error :`, rz.error)
           error = 'buyNFT error'
