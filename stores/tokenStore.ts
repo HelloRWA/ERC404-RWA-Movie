@@ -49,7 +49,7 @@ export const tokenStore = defineStore("tokenStore", () => {
         nftHolderCount: rz[4],
         sbtSold: rz[5],
         ftPrice: rz[6],
-        sbtPrice: rz[7],
+        sbtPrice: rz[7]
       };
     }
     isLoading = false;
@@ -88,7 +88,7 @@ export const tokenStore = defineStore("tokenStore", () => {
 
     const { logs } = await writeContract("ERC404_RWA", "launchToken", { eventName: ['TokenLaunched', 'SBTCreated'] }, ...params);
     const tokenId = useGet(logs, 'TokenLaunched.args.tokenId')
-    const sbtId = useGet(logs, 'SBTCreated.args.')
+    // const sbtId = useGet(logs, 'SBTCreated.args.sbtId')
     // update token status to be 'launched'
     const rz = await doPost("/api/token/update", {
       id: form.id,
@@ -99,6 +99,7 @@ export const tokenStore = defineStore("tokenStore", () => {
         isShow = true;
       });
     }
+
     isShow = false;
     isLoading = false;
 

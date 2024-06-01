@@ -898,6 +898,11 @@
         "internalType": "uint256",
         "name": "ftPrice",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sbtPrice",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

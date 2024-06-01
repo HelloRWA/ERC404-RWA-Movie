@@ -31,7 +31,7 @@ const { isLoading, doShowMint, tiers } = $(tokenStore());
             'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
           ]"
         >
-          Mint NFT
+          Mint
         </button>
         <ul role="list" class="space-y-3 mt-8 text-sm text-gray-300 leading-6 xl:mt-10">
           <li v-for="feature in tier.features" :key="feature" class="flex gap-x-3">
