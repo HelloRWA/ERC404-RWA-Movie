@@ -25,5 +25,9 @@
   },
   "sepolia": {
     "USDC": "0x76ca8e630415be9615396724f51ff1702b86ed63"
+  },
+  "binanceSmartChainTestnet": {
+    "BSTEntropy": "0x97AdB6B290eC25946ABbef48b41Ed4aed21F1c03",
+    "ERC404_RWA": "0xCC6653Da021f5041e40431635D9B1e270C7797CD"
   }
 }

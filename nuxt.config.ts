@@ -48,6 +48,11 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
     routeRules: {
       '/**': { isr: false },
     },
@@ -114,5 +119,14 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'internationalization',
     defaultLocale: 'en',
-  }
+  },
+  vite: {
+    esbuild: {
+      tsconfigRaw: {
+        compilerOptions: {
+          target: 'esnext',
+        },
+      },
+    },
+  },
 })

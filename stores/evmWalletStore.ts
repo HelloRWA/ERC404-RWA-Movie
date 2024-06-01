@@ -22,7 +22,7 @@ const networkMap = {
 export const evmWalletStore = defineStore("evmWalletStore", () => {
   let address = $(lsItemRef("evmAddress", ""));
   let web3Client = $ref(null);
-  const network = "hardhat";
+  const network = "binanceSmartChainTestnet";
   const { addError } = $(notificationStore());
 
   const ensureChain = async (network) => {

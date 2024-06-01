@@ -13,7 +13,7 @@ const stats = $computed(() => {
 
 const linkToOpenSea = $computed(() => {
   const address = getContractAddress("ERC404_RWA", network);
-  return `https://testnets.opensea.io/assets/amoy/${address}/${tokenId}`;
+  return `https://testnets.opensea.io/assets/bsctestnet/${address}/${tokenId}`;
 });
 </script>
 
