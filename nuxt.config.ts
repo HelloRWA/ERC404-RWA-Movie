@@ -121,6 +121,9 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
   },
   vite: {
+    define: {
+      global: 'window'
+    },
     esbuild: {
       tsconfigRaw: {
         compilerOptions: {

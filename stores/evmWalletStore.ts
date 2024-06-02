@@ -159,7 +159,7 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     }
   };
 
-  return $$({ address, network, readContract, writeContract, getBrowserWalletInstance });
+  return $$({ address, web3Client, network, readContract, writeContract, getBrowserWalletInstance });
 });
 
 if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(evmWalletStore, import.meta.hot));

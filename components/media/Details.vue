@@ -34,5 +34,6 @@ defineProps<{
   <MediaOverview v-if="tab === 'overview'" :item="item" :type="type" />
   <MediaVideos v-if="tab === 'videos'" :item="item" />
   <MediaPhotos v-if="tab === 'photos'" :item="item" />
+  <MediaBlog v-if="tab === 'blog'" :item="item" />
   <!-- <FeedList v-if="tab === 'feed'" :item="item" /> -->
 </template>
