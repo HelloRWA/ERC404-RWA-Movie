@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { bootstrap, getSignatures } = $(litStore());
+// const { bootstrap, getSignatures } = $(litStore());
 
-onMounted(bootstrap);
+// onMounted(bootstrap);
 
-onMounted(async () => {
-  await getSignatures();
-});
+// onMounted(async () => {
+//   await getSignatures();
+// });
 const posts = [
   {
     id: 1,

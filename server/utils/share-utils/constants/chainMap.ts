@@ -1,10 +1,11 @@
-import { hardhat, mantleTestnet, polygonAmoy, goerli, polygon, avalancheFuji, optimismGoerli, moonbaseAlpha, bscTestnet } from 'viem/chains'
+import { hardhat, mantleTestnet, polygonAmoy, goerli, polygon, avalancheFuji, optimismGoerli, moonbaseAlpha, bscTestnet, filecoinCalibration } from 'viem/chains'
 import _ from 'lodash'
 import { defineChain, http } from 'viem'
 
 moonbaseAlpha.bridgeLink = 'https://faucet.moonbeam.network/'
 polygonAmoy.bridgeLink = 'https://www.alchemy.com/faucets/polygon-amoy'
 bscTestnet.bridgeLink = 'https://www.bnbchain.org/en/testnet-faucet'
+filecoinCalibration.bridgeLink = 'https://docs.filecoin.io/networks/calibration#resources'
 
 export const miniGasMap = {
   bevmCanaryTestnet: "0.00009",
@@ -78,6 +79,7 @@ const bevmTestnet = defineChain({
 
 const allChains = {
   'binanceSmartChainTestnet': bscTestnet,
+  filecoinCalibration,
   hardhat, mantleTestnet, goerli, polygon, avalancheFuji, optimismGoerli, polygonAmoy, moonbaseAlpha, bevmCanary, bevmCanaryTestnet, bevmTestnet
 }
 

@@ -24,7 +24,9 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
   let address = $(lsItemRef("evmAddress", ""));
   let web3Client = $ref(null);
   const signer = $computed(()=> web3Client)
-  const network = "binanceSmartChainTestnet";
+  let network = "filecoinCalibration";
+  network = "hardhat";
+  network = "filecoinCalibration";
   const { addError } = $(notificationStore());
 
   const ensureChain = async (network) => {

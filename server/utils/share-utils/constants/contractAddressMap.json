@@ -29,5 +29,9 @@
   "binanceSmartChainTestnet": {
     "BSTEntropy": "0x97AdB6B290eC25946ABbef48b41Ed4aed21F1c03",
     "ERC404_RWA": "0xCC6653Da021f5041e40431635D9B1e270C7797CD"
+  },
+  "filecoinCalibration": {
+    "BSTEntropy": "0x0eE3cf9f7f3954b13db8EB7d57B77D1bB6Eb299b",
+    "ERC404_RWA": "0x45054dF2E1b3b241F2fD9C1fF934c5D2BbCd602b"
   }
 }
