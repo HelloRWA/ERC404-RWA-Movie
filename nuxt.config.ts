@@ -3,7 +3,8 @@ import process from 'node:process'
 const isDev = process.env.NODE_ENV === 'development'
 
 // const apiBaseUrl = 'http://localhost:3001'
-const apiBaseUrl = 'https://movies-proxy.vercel.app'
+// const apiBaseUrl = 'https://movies-proxy.vercel.app'
+const apiBaseUrl = import.meta.env.VITE_PROXY_URL
 
 export default defineNuxtConfig({
   imports: {
