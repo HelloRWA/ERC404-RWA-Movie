@@ -47,16 +47,16 @@ export default defineNuxtConfig({
       },
     },
   },
-  // nitro: {
-  //   esbuild: {
-  //     options: {
-  //       target: 'esnext',
-  //     },
-  //   },
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
   //   routeRules: {
   //     // '/**': { isr: false },
   //   },
-  // },
+  },
   supabase: {
     redirect: false,
     clientOptions: {
