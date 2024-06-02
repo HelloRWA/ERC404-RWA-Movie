@@ -18,16 +18,16 @@ export default defineNuxtConfig({
     '@vue-macros/nuxt',
     'nuxt-lodash',
     '@nuxtjs/supabase',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
   experimental: {
-    inlineSSRStyles: false,
+    // inlineSSRStyles: true,
     viewTransition: true,
     renderJsonPayloads: true,
   },
-  routeRules: {
-    '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
-  },
+  // routeRules: {
+  //   '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } },
+  // },
   runtimeConfig: {
     public: {
       apiBaseUrl,
@@ -47,16 +47,16 @@ export default defineNuxtConfig({
       },
     },
   },
-  nitro: {
-    esbuild: {
-      options: {
-        target: 'esnext',
-      },
-    },
-    routeRules: {
-      // '/**': { isr: false },
-    },
-  },
+  // nitro: {
+  //   esbuild: {
+  //     options: {
+  //       target: 'esnext',
+  //     },
+  //   },
+  //   routeRules: {
+  //     // '/**': { isr: false },
+  //   },
+  // },
   supabase: {
     redirect: false,
     clientOptions: {
@@ -122,14 +122,14 @@ export default defineNuxtConfig({
   },
   vite: {
     define: {
-      global: 'window'
+      global: 'window',
     },
-    esbuild: {
-      tsconfigRaw: {
-        compilerOptions: {
-          target: 'esnext',
-        },
-      },
-    },
+    // esbuild: {
+    //   tsconfigRaw: {
+    //     compilerOptions: {
+    //       target: 'esnext',
+    //     },
+    //   },
+    // },
   },
 })
