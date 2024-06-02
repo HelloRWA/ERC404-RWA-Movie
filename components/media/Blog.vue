@@ -1,8 +1,15 @@
 <script setup lang="ts">
+const { bootstrap, getSignatures } = $(litStore());
+
+onMounted(bootstrap);
+
+onMounted(async () => {
+  await getSignatures();
+});
 const posts = [
   {
     id: 1,
-    title: "Boost your conversion rate",
+    title: "Boost your conversion rate 1",
     href: "#",
     description:
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel iusto corrupti dicta laboris incididunt.",
@@ -20,8 +27,8 @@ const posts = [
     },
   },
   {
-    id: 1,
-    title: "Boost your conversion rate",
+    id: 2,
+    title: "Boost your conversion rate 2",
     href: "#",
     description:
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel iusto corrupti dicta laboris incididunt.",
@@ -39,8 +46,8 @@ const posts = [
     },
   },
   {
-    id: 1,
-    title: "Boost your conversion rate",
+    id: 3,
+    title: "Boost your conversion rate 3",
     href: "#",
     description:
       "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel iusto corrupti dicta laboris incididunt.",

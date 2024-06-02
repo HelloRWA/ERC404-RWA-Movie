@@ -12,16 +12,18 @@ import {
   publicActions,
   keccak256,
 } from "viem";
-import { hardhat, filecoinCalibration } from "viem/chains";
+import { hardhat, filecoinCalibration, bscTestnet } from "viem/chains";
 
 const networkMap = {
   hardhat,
   filecoinCalibration,
+  binanceSmartChainTestnet: bscTestnet,
 };
 
 export const evmWalletStore = defineStore("evmWalletStore", () => {
   let address = $(lsItemRef("evmAddress", ""));
   let web3Client = $ref(null);
+  const signer = $computed(()=> web3Client)
   const network = "binanceSmartChainTestnet";
   const { addError } = $(notificationStore());
 
@@ -36,12 +38,14 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
         await web3Client.switchChain({ id: chain.id })
         return true
       }
+      console.log(`====> e :`, e, network)
       addError('Current network not correct!')
       return false
     }
 
     return true;
   };
+
   const getBrowserWalletInstance = async (network) => {
     const chain = networkMap[network]
     const [account] = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -159,7 +163,7 @@ export const evmWalletStore = defineStore("evmWalletStore", () => {
     }
   };
 
-  return $$({ address, web3Client, network, readContract, writeContract, getBrowserWalletInstance });
+  return $$({ address, web3Client, signer, network, readContract, writeContract, getBrowserWalletInstance });
 });
 
 if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(evmWalletStore, import.meta.hot));
