@@ -7,8 +7,6 @@ This is the frontend code for the ERC404 RWA Movie project. It build on the  ope
 ## Demo
 
 * [Demo website](https://movie.rwa-wallet.com)
-* [ERC404 Movie Contract deployment on FVM](https://calibration.filfox.info/en/address/0x45054dF2E1b3b241F2fD9C1fF934c5D2BbCd602b)
-* [BST Coin Contract deployment on FVM](https://calibration.filfox.info/en/address/0x0eE3cf9f7f3954b13db8EB7d57B77D1bB6Eb299b)
 
 
 ## Features
